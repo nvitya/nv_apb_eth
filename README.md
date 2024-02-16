@@ -11,4 +11,4 @@ The NV APB Ethernet is a simple ethernet solution for FPGAs using only the simpl
  * Currently supported/tested phy protocols: GMII (soon can be expected: RGMII, RMII, MII)
 
 ## Documentation
-[NV APB Ethernet Documentation](nv_apb_eth_doc.odt)
+[NV APB Ethernet Documentation](nv_apb_ethernet_doc.odt)
