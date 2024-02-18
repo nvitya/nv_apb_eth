@@ -30,10 +30,14 @@ use ieee.numeric_std.all;
 package version is
 
 --                                                       II_JN_CCCC, II=module id, J=Major version, N=Minor, CC=Change increment
-constant NV_ETH_APB_VERSION : unsigned(31 downto 0) := X"E0_10_0004";
+constant NV_ETH_APB_VERSION : unsigned(31 downto 0) := X"E0_10_0006";
 
 /* version description :
 
+10_0006:
+  - Finally working RGMII TX (with proper clock skew)
+10_0005:
+  - IGNORE_RX_ERR handling
 10_0004:
   - TXMEM read disabled
   - SLOT count fix

@@ -500,6 +500,7 @@ begin
 
     MAC_ADDR        => MAC_ADDRESS, -- in  unsigned(47 downto 0);
     MAC_ADDR_FILT   => not RX_PROMISCUOUS,  -- in  std_logic;
+    IGNORE_ERR      => RX_IGNORE_ERR,
 
     ETH_DATA        => RXDATA,          -- in  unsigned(7 downto 0);
     ETH_DATA_VALID  => RXDATA_VALID,    -- in  std_logic;  -- does this require synchronization ?

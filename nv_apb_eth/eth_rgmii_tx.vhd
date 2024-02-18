@@ -44,35 +44,24 @@ end entity;
 
 architecture behavioral of eth_rgmii_tx
 is
-	signal TXEN_SH : std_logic_vector(0 downto 0);
-	signal TXD_OUT : unsigned(3 downto 0);
 begin
 
   ETH_DATA_CLK <= RGMII_CLK;
-	RGMII_TXD    <= TXD_OUT;
-
-  rgmii : process(RGMII_CLK)
-  begin
-    if rising_edge(RGMII_CLK)
-    then
-      RGMII_TXEN <= ETH_DATA_VALID;  -- one clock delay
-
-      --TXEN_SH(0) <= ETH_DATA_VALID;
-      --RGMII_TXEN <= TXEN_SH(0); -- two clocks delay
-    end if; -- clock
-  end process;
 
 	rgmmi_tx_ddr : entity work.ddr_output  -- platform dependent implementation
 	generic map
 	(
-		DATA_WIDTH => 4
+		DATA_WIDTH => 5
 	)
 	port map
 	(
-		DATA_IN_R  => ETH_DATA(3 downto 0),   -- in  unsigned(DATA_WIDTH - 1 downto 0);
-		DATA_IN_F  => ETH_DATA(7 downto 4),   -- in  unsigned(DATA_WIDTH - 1 downto 0);
-		DATA_OUT   => TXD_OUT,                -- out unsigned(DATA_WIDTH - 1 downto 0);
-		CLOCK      => RGMII_CLK
+		DATA_IN_R(3 downto 0)  => ETH_DATA(3 downto 0),   -- in  unsigned(DATA_WIDTH - 1 downto 0);
+		DATA_IN_R(4)           => ETH_DATA_VALID,
+		DATA_IN_F(3 downto 0)  => ETH_DATA(7 downto 4),   -- in  unsigned(DATA_WIDTH - 1 downto 0);
+		DATA_IN_F(4)           => ETH_DATA_VALID,
+		DATA_OUT(3 downto 0)	 => RGMII_TXD,              -- out unsigned(DATA_WIDTH - 1 downto 0);
+		DATA_OUT(4)            => RGMII_TXEN,
+		CLOCK      					 	 => RGMII_CLK
 	);
 
 end architecture;

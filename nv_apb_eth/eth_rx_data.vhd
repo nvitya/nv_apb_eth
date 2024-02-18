@@ -45,6 +45,7 @@ port
 
   MAC_ADDR        : in  unsigned(47 downto 0);
   MAC_ADDR_FILT   : in  std_logic;
+  IGNORE_ERR      : in  std_logic;
 
   ETH_DATA        : in  unsigned(7 downto 0);
   ETH_DATA_VALID  : in  std_logic;
@@ -163,7 +164,12 @@ begin
             if CRC /= X"C704DD7B" -- magic number, remainder after special processing
             then
               ERR_TOG_CRC <= not ERR_TOG_CRC;
-              STATE <= ST_WAITPAUSE;
+              if IGNORE_ERR = '1'
+              then
+                STATE <= ST_STORE;
+              else
+                STATE <= ST_WAITPAUSE;  -- normal case, do not store this packet
+              end if;
             else
               STATE <= ST_STORE;
             end if;
